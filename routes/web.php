@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/usuarios', 'UsuarioController@index')->name('usuarios');
+Route::get('/productos', 'ProductoController@index')->name('productos');
+
+//Route::get('/materias-primas', 'MateriaPrimaController@index')->name('materias-primas');
+//Route::post('/materias-primas/store', 'MateriaPrimaController@store')->name('materias-primas.store');
+Route::resource('materias-primas', 'MateriaPrimaController');
 
 
 Route::get('/', function () {

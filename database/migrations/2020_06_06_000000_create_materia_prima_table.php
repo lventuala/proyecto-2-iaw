@@ -14,10 +14,12 @@ class CreateMateriaPrimaTable extends Migration
     public function up()
     {
         Schema::create('materia_prima', function (Blueprint $table) {
-            $table->id('id_mp');
+            $table->id();
             $table->string('nombre');
-            $table->integer('uni_medida');
+            $table->unsignedBigInteger('unidad_medida_id',false)->references('id')->on('unidad_medida')->nullable();
+            $table->unsignedBigInteger('categoria_mp_id',false)->references('id')->on('categoria_mp')->nullable();
             $table->double('cantidad');
+            $table->smallInteger('estado');
             $table->timestamps();
         });
     }

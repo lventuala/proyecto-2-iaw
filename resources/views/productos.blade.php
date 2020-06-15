@@ -2,6 +2,6 @@
 
 @section('home_contenido')
 
-HOME
+Productos
 
 @endsection

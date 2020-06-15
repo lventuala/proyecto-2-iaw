@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     protected $table = 'usuario';
-    protected $primaryKey = 'id_usuario';
 
     use Notifiable;
 
@@ -39,5 +38,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles() {
+        return $this
+            ->belongsToMany('App\Rol', 'rol_usuario', 'usuario_id', 'rol_id')
+            ->withTimestamps();
+    }
+
+    public function hasRol($rol) {
+        if ($this->roles()->where('nombre', $rol)->first()) {
+            return true;
+        }
+
+        return false;
+    }
 
 }

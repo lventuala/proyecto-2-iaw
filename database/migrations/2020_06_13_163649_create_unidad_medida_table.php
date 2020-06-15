@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmpresaTable extends Migration
+class CreateUnidadMedidaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateEmpresaTable extends Migration
      */
     public function up()
     {
-        Schema::create('empresa', function (Blueprint $table) {
-            $table->id('id_empresa');
+        Schema::create('unidad_medida', function (Blueprint $table) {
+            $table->id();
+            $table->string('abreviatura');
             $table->string('descripcion');
             $table->timestamps();
         });
@@ -27,6 +28,6 @@ class CreateEmpresaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empresa');
+        Schema::dropIfExists('unidad_medida');
     }
 }

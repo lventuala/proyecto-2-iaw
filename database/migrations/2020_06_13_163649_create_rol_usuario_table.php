@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductoMpTable extends Migration
+class CreateRolUsuarioTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateProductoMpTable extends Migration
      */
     public function up()
     {
-        Schema::create('producto_mp', function (Blueprint $table) {
+        Schema::create('rol_usuario', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('producto_id',false);
-            $table->unsignedBigInteger('materia_prima_id',false);
-            $table->string('nombre');
-            $table->string('descripcion');
+            $table->unsignedBigInteger('rol_id',false)->references('id')->on('rol');
+            $table->unsignedBigInteger('usuario_id',false)->references('id')->on('usuario');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateProductoMpTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('producto_mp');
+        Schema::dropIfExists('rol_usuario');
     }
 }
