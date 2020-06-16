@@ -29,6 +29,9 @@
         @yield('home_contenido')
 
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="https://unpkg.com/feather-icons"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         @yield('script')
     </div>
 
