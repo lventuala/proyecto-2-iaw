@@ -16,4 +16,8 @@ class CategoriaMP extends Model
     protected $fillable = [
         'id', 'nombre','estado',
     ];
+
+    public function MPs() {
+        return $this->hasMany(MateriaPrima::class, 'categoria_mp_id');
+    }
 }

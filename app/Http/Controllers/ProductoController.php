@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\MateriaPrima;
+use App\Producto;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -13,7 +15,11 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return view('productos');
+        $materias_primas = MateriaPrima::getAllActivas();
+        $data = [
+            'materias_primas' => $materias_primas
+        ];
+        return view('productos/productos',$data);
     }
 
     /**
@@ -34,7 +40,23 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $result = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'mp.*.materia_prima_id' => 'required|numeric',
+            'mp.*.cantidad' => 'required|numeric|min:0.1',
+            'imagen' => 'required|image'
+        ]);
+
+        $file = $request->file('imagen');
+        $extension = $file->getClientOriginalExtension();
+        $fileName = auth()->id() . '.' . $extension;
+        $request->name = $fileName;
+
+        Producto::guardarProducto($result,$file);
+
+        return $result;
     }
 
     /**

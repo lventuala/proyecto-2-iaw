@@ -25,6 +25,15 @@ class MateriaPrimaSeeder extends Seeder
         $c_bebida = CategoriaMP::where('nombre','Bebidas')->get(['id'])->first();
         $c_condimento = CategoriaMP::where('nombre','Condimentos')->get(['id'])->first();
         $c_aderezo = CategoriaMP::where('nombre','Aderezos')->get(['id'])->first();
+        $c_verdura = CategoriaMP::where('nombre','Verduras')->get(['id'])->first();
+
+        $mp = new MateriaPrima ();
+        $mp->nombre = 'Papas';
+        $mp->cantidad = 30;
+        $mp->estado = 0;
+        $mp->unidad_medida_id = $um_kg->id;
+        $mp->categoria_mp_id = $c_verdura->id;
+        $mp->save();
 
         $mp = new MateriaPrima ();
         $mp->nombre = 'Vino Blanco';

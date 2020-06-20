@@ -15,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/usuarios', 'UsuarioController@index')->name('usuarios');
-Route::get('/productos', 'ProductoController@index')->name('productos');
+//Route::get('/productos', 'ProductoController@index')->name('productos');
 
 //Route::get('/materias-primas', 'MateriaPrimaController@index')->name('materias-primas');
 //Route::post('/materias-primas/store', 'MateriaPrimaController@store')->name('materias-primas.store');
 Route::resource('materias-primas', 'MateriaPrimaController');
+Route::resource('productos', 'ProductoController');
 
 
 Route::get('/', function () {

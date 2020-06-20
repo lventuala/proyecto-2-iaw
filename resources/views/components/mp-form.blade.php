@@ -14,9 +14,10 @@
     @csrf
     <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input name="nombre" type="text" placeholder="Ingrese el nombre" id="nombre"
+        <input name="nombre" type="text" placeholder="Ingrese el nombre" id="nombre" required
             value=@isset($data_mod) "{{$data_mod->nombre}}" @else "{{old('nombre')}}" @endisset
                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+
         >
         <div class="invalid-feedback">
             {{ $errors->first('nombre') }}
@@ -41,8 +42,12 @@
     </div>
     <div class="form-group">
         <label for="unidad_medida_id">Unidad de Medida:</label>
-        <select name="unidad_medida_id" id="unidad_medida_id" id="unidad_medida_id" value="{{old('unidad_medida_id')}}" required
+        <select
+            name="unidad_medida_id"
+            id="unidad_medida_id"
+            value="{{old('unidad_medida_id')}}"
             class="form-control {{ $errors->has('unidad_medida_id') ? 'is-invalid' : '' }}"
+            required
         >
             <option disabled selected value>Seleccione unidad de medida...</option>
             @foreach($unidad_medida as $um)
@@ -58,10 +63,14 @@
     </div>
     <div class="form-group">
         <label for="cantidad">Cantidad:</label>
-        <input name="cantidad" type="number" placeholder="Ingrese la cantidad" id="cantidad"
-            value=@isset($data_mod) "{{$data_mod->cantidad}}" @else "{{old('cantidad')}}" @endisset
-
+        <input
+            name="cantidad"
+            id="cantidad"
+            type="number"
+            placeholder="Ingrese la cantidad"
             class="form-control {{ $errors->has('cantidad') ? 'is-invalid' : '' }}"
+            required
+            value=@isset($data_mod) {{$data_mod->cantidad}} @else {{old('cantidad')}} @endisset
         >
         <div class="invalid-feedback">
             {{ $errors->first('cantidad') }}

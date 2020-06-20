@@ -28,6 +28,15 @@ class MateriaPrima extends Model
         ->where('materia_prima.id',$id)->get()->first();
     }
 
+    public static function getAllActivas() {
+        return MateriaPrima::
+        join('unidad_medida','unidad_medida.id', '=', 'unidad_medida_id')
+        ->join('categoria_mp','categoria_mp.id', '=', 'categoria_mp_id')
+        ->select('materia_prima.id','materia_prima.nombre', 'cantidad', 'descripcion as uni_medida', 'categoria_mp.nombre as categoria')
+        ->where('materia_prima.estado','0')
+        ->orderBy('materia_prima.nombre')->get();
+    }
+
     public static function getPaginate($cant) {
         return MateriaPrima::
         join('unidad_medida','unidad_medida.id', '=', 'unidad_medida_id')
@@ -39,10 +48,10 @@ class MateriaPrima extends Model
     }
 
     public function unidadMedida() {
-        return $this->hasOne(UnidadMedida::class);
+        return $this->belongsTo(UnidadMedida::class);
     }
 
     public function categoriaMP() {
-        return $this->hasOne(CategoriaMP::class);
+        return $this->belongsTo(CategoriaMP::class);
     }
 }

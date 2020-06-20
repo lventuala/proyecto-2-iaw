@@ -11,7 +11,7 @@
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('productos') ? 'active' : '' }}" href="{{route('productos')}}">@lang('Productos')</a>
+                    <a class="nav-link {{ request()->routeIs('productos.index') ? 'active' : '' }}" href="{{route('productos.index')}}">@lang('Productos')</a>
                 </li>
 
                 <li class="nav-item">

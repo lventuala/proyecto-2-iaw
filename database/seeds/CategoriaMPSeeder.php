@@ -36,5 +36,10 @@ class CategoriaMPSeeder extends Seeder
         $cat->nombre = 'Bebidas';
         $cat->estado = 0;
         $cat->save();
+
+        $cat = new CategoriaMP();
+        $cat->nombre = 'Verduras';
+        $cat->estado = 0;
+        $cat->save();
     }
 }

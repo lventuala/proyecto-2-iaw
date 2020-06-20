@@ -15,10 +15,9 @@ class CreateProductoMpTable extends Migration
     {
         Schema::create('producto_mp', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('producto_id',false);
-            $table->unsignedBigInteger('materia_prima_id',false);
-            $table->string('nombre');
-            $table->string('descripcion');
+            $table->unsignedBigInteger('producto_id',false)->references('id')->on('producto');;
+            $table->unsignedBigInteger('materia_prima_id',false)->references('id')->on('materia_prima');;
+            $table->double('cantidad');
             $table->timestamps();
         });
     }
