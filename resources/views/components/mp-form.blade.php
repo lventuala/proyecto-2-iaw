@@ -14,7 +14,9 @@
     @csrf
     <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input name="nombre" type="text" placeholder="Ingrese el nombre" id="nombre" required
+        <input
+            name="nombre" type="text"
+            placeholder="Ingrese el nombre" id="nombre" required
             value=@isset($data_mod) "{{$data_mod->nombre}}" @else "{{old('nombre')}}" @endisset
                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
 

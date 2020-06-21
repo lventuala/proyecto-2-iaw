@@ -1,4 +1,15 @@
-<form id="form_producto_insert" onsubmit="insertarProducto(event)" action="#">
+<form
+    @isset($producto)
+        id="producto_form_modi" action="#" onsubmit="modificarProducto(event,{{$producto->id}})"
+    @else
+        id="producto_form_alta" action="#" onsubmit="insertarProducto(event)"
+    @endisset
+>
+
+    @isset($producto)
+        @method('PUT')
+    @endisset
+
     @csrf
 
     <div class="row mb-3">
@@ -7,8 +18,14 @@
 
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input name="nombre" type="text" placeholder="Ingrese el nombre" id="nombre"
-                        class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                <input
+                    name="nombre"
+                    type="text"
+                    placeholder="Ingrese el nombre"
+                    id="nombre"
+                    value="@isset($producto){{$producto->nombre}}@else{{old('nombre')}}@endisset"
+                    class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                    required
                 >
                 <div id="nombre_err" class="invalid-feedback">
                 </div>
@@ -16,9 +33,13 @@
 
             <div class="form-group">
                 <label for="descripcion">Descripcion:</label>
-                <textarea name="descripcion" type="text" placeholder="Ingrese una descripcion" id="descripcion"
-                        class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                ></textarea>
+                <textarea
+                    name="descripcion"
+                    type="text"
+                    placeholder="Ingrese una descripcion" id="descripcion"
+                    class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                    required
+                >@isset($producto){{$producto->descripcion}}@else{{old('descripcion')}}@endisset</textarea>
                 <div id="descripcion_err" class="invalid-feedback">
                 </div>
             </div>
@@ -26,12 +47,38 @@
             <div class="form-group">
 
                 <div class="custom-file">
-                    <input id="in_imagen_prod" name="imagen" type="file" class="custom-file-input" lang="es">
-                    <label id="lbl_imagen" class="custom-file-label" for="validatedCustomFile">Seleccioanr imagen...</label>
+                    <input
+                        @isset($producto)
+                            id="in_imagen_prod_mod"
+                        @else
+                            id="in_imagen_prod"
+                            required
+                        @endisset
+                        name="imagen"
+                        type="file"
+                        class="custom-file-input" lang="es"
+                        value="----"
+                    >
+                    <label
+                        @isset($producto)
+                            id="lbl_imagen_mod"
+                        @else
+                            id="lbl_imagen"
+                        @endisset
+                        class="custom-file-label"
+                        for="validatedCustomFile">@isset($producto) {{$producto->nombre_img}} @else Seleccioanr imagen...@endisset</label>
                     <div class="invalid-feedback">La imagen es obligatoria</div>
                 </div>
 
-                <img style="width: 100%;" id='img-upload'/>
+                <img
+                    style="width: 100%;"
+                    @isset($producto)
+                        id='img_upload_mod'
+                        src="data:image/gif;base64,{{stream_get_contents($producto->img)}}"
+                    @else
+                        id='img_upload'
+                    @endisset
+                />
 
             </div>
 
@@ -48,10 +95,10 @@
                             <tr>
                                 <th class="w-75" scope="col">MP | Uni. Medida</th>
                                 <th class="w-25" scope="col">Cantidad</th>
-                                <th><button type="button" class="btn btn-primary" onclick="agregarMPAlProducto()"> + </button></th>
+                                <th><button type="button" class="btn btn-primary" @isset($producto) onclick="agregarMPAlProducto(true)" @else onclick="agregarMPAlProducto()" @endisset> + </button></th>
                             </tr>
                         </thead>
-                        <tbody id="body_mp">
+                        <tbody @isset($producto) id="body_mp_mod" @else id="body_mp" @endisset>
                             <tr id="mp_tr_1">
                                 <td>
                                     <div class="form-group">
@@ -74,13 +121,11 @@
                                             El campo MP es obligatorio
                                         </div>
                                     </div>
-
-
                                 </td>
                                 <td>
                                     <div class="form-group">
                                         <input
-                                        id="mp_1_cantidad"
+                                        @isset($producto) id="mp_1_cantidad_mod" @else id="mp_1_cantidad" @endisset
                                         name="mp[1][cantidad]"
                                         class="form-control {{ $errors->has('mp.1.cantidad') ? 'is-invalid' : '' }}"
                                         value="{{old('mp.1.cantidad')}}"
@@ -92,8 +137,6 @@
                                             El campo cantidad es obligatorio
                                         </div>
                                     </div>
-
-
                                 </td>
                                 <td class="td_button">
                                 </td>
@@ -106,9 +149,12 @@
 
     </div>
 
-    <button type="submit" class="btn btn-primary">
-        Aceptar
-    </button>
+    @isset($producto)
+        <button type="submit" class="btn btn-primary">Modificar</button>
+        <button id="btn_cancelar_producto" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+    @else
+        <button type="submit" class="btn btn-primary">Aceptar</button>
+    @endisset
 </form>
 
 

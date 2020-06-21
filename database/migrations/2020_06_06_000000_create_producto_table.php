@@ -18,6 +18,7 @@ class CreateProductoTable extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->smallInteger('estado');
+            $table->string('nombre_img');
             $table->binary('img');
             $table->timestamps();
         });

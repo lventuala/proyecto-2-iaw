@@ -7,7 +7,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="body_list_mp">
+    <tbody id="body_list_producto">
         @isset($productos)
 
             @forelse ($productos as $p)

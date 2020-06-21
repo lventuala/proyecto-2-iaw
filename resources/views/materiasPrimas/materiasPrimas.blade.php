@@ -38,7 +38,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Modificar Materia Prima</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
+                    x
                 </button>
             </div>
             <div id="mod_mp" class="modal-body">
@@ -53,7 +53,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Elimnar Materia Prima</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
+                    x
                 </button>
             </div>
             <div id="mod_mp" class="modal-body">

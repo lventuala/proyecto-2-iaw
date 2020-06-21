@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MateriaPrima;
 use App\Producto;
+use App\View\Components\productoForm;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -63,13 +64,11 @@ class ProductoController extends Controller
             'descripcion' => 'required',
             'mp.*.materia_prima_id' => 'required|numeric',
             'mp.*.cantidad' => 'required|numeric|min:0.1',
-            'imagen' => 'required|image'
+            'imagen' => 'required|image',
+            'file_name' => 'required'
         ]);
 
         $file = $request->file('imagen');
-        $extension = $file->getClientOriginalExtension();
-        $fileName = auth()->id() . '.' . $extension;
-        $request->name = $fileName;
 
         Producto::guardarProducto($result,$file);
 
@@ -100,7 +99,22 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        //
+        // recupero el producto
+        $producto = Producto::get($id);
+        $materias_primas = MateriaPrima::getAllActivas();
+        $producto_mp = Producto::getMP_all($id);
+
+        // preparo formulario para mostrar ( en este caso con datos del producto )
+        $productoForm = new productoForm($materias_primas,$producto,$producto_mp);
+        $view_form = $productoForm->renderConParametros()->render();
+
+        // devuelvo html con el formulario (para mostra por ajax)
+        if (Request()->ajax()) {
+            return response()->json([
+                    'view_form' => $view_form,
+                    'productos_mp' => $producto_mp
+                ]);
+        }
     }
 
     /**
@@ -112,7 +126,28 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $result = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'mp.*.materia_prima_id' => 'required|numeric',
+            'mp.*.cantidad' => 'required|numeric|min:0.1'
+        ]);
+
+        $file = null;
+        $fileName = null;
+        if (isset($request->imagen)) {
+            $request->validate([
+                'imagen' => 'required|image',
+                'file_name' => 'required'
+            ]);
+
+            $file = $request->file('imagen');
+            $fileName = $request['file_name'];
+        }
+
+        Producto::updateProducto($id,$result,$file,$fileName);
+
+        return $request;
     }
 
     /**
