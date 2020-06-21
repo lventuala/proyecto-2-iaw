@@ -49,6 +49,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="id_elim_producto" tabindex="-1" role="dialog" aria-labelledby="lb_elim_producto" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    x
+                </button>
+            </div>
+            <div id="elim_producto" class="modal-body">
+                <p>Se va a eliminar el producto seleccionada. Desea continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <form id="form_elim_producto" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <input type="hidden" name="_id_elim">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_elim_confirmar">Si</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 @endsection
 
@@ -299,6 +325,22 @@ function modificarProducto(e,id) {
         });
 
     }
+
+    // recupero informacion para eliminar el producto
+    $(document).on('click', '.elim_producto', function(e) {
+        id = $(this).parent().parent().attr('id');
+        $('#id_elim_producto').modal('show');
+        $('input[name=_id_elim]').val(id);
+
+        var route = "{{ route('productos.destroy',':id') }}";
+        route = route.replace(':id',id.trim());
+
+        $('#form_elim_producto').attr('action',route);
+
+        $(document).on('click', '#btn_elim_confirmar', function(e) {
+            $('#form_elim_producto').submit();
+        });
+    });
 
 
 </script>

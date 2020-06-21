@@ -158,6 +158,11 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mp = Producto::get($id);
+        $mp->estado = 1;
+        $mp->save();
+
+        // vuelvo a la vista con mensaje de exito
+        return back()->withSuccess('El producto se elimino correctamente');
     }
 }

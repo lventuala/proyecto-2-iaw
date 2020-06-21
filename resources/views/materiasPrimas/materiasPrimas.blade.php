@@ -51,7 +51,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Elimnar Materia Prima</h5>
+                <h5 class="modal-title">Eliminar Materia Prima</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     x
                 </button>
@@ -120,7 +120,7 @@
         });
     });
 
-    // recupero informacion para editar la mp
+    // recupero informacion para eliminar la mp
     $(document).on('click', '.elim_mp', function(e) {
         id = $(this).parent().parent().attr('id');
         $('#id_elim_mp').modal('show');
