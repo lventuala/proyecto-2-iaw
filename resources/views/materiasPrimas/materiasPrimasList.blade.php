@@ -29,7 +29,7 @@
 
                 </tr>
             @empty
-                <p>No users</p>
+                <p>No hay materias primas</p>
             @endforelse
         @endisset
     </tbody>

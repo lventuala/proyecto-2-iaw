@@ -18,6 +18,14 @@ class Producto extends Model
         'nombre', 'descripcion', 'estado', 'img'
     ];
 
+    public static function getPaginate($cant) {
+        return Producto::
+        select('producto.id', 'producto.nombre', 'producto.descripcion', 'producto.img')
+        ->where('producto.estado','0')
+        ->orderBy('producto.nombre')
+        ->paginate($cant);
+    }
+
     public static function guardarProducto($prod, $file) {
         DB::transaction(function () use ($prod,$file) {
             // inserto producto

@@ -26,7 +26,7 @@
             <div class="form-group">
 
                 <div class="custom-file">
-                    <input name="imagen" type="file" class="custom-file-input" id="imagen" lang="es">
+                    <input id="in_imagen_prod" name="imagen" type="file" class="custom-file-input" lang="es">
                     <label id="lbl_imagen" class="custom-file-label" for="validatedCustomFile">Seleccioanr imagen...</label>
                     <div class="invalid-feedback">La imagen es obligatoria</div>
                 </div>
@@ -111,105 +111,5 @@
     </button>
 </form>
 
-@section('script')
-<script>
-    $(document).on('change', '#imagen', function() {
-		var input = $(this),
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        $('#lbl_imagen').html(label);
-
-        input.trigger('fileselect', [label]);
-
-        console.log(input);
-    });
-
-    $("#imagen").change(function(){
-        readURL(this);
-    });
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#img-upload').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 
 
-    // agrego una materia prima a la lista
-    function agregarMPAlProducto() {
-        // recupero el ultimo id agregado -> es incremental
-        var id = $('#body_mp').children().last().attr('id').replace('mp_tr_','');
-        var new_id = Number(id) + 1;
-
-        // recupero primer tr para hacer una copia
-        var cant = $('#body_mp').children().length;
-        var html = '<tr id="mp_tr_'+new_id+'">';
-        html += $('#body_mp').children().first().html();
-
-        // reemplazo por el nuevo id en todos lados donde figura 1
-        html = html.replace(/mp\[1]/g,'mp['+new_id+']');
-        html = html.replace(/mp\.1/g,'mp.'+new_id);
-        html = html.replace(/mp_1/g,'mp_'+new_id);
-        html = html.replace(/is-invalid/g,'');
-
-        // armmo la fila y la agrego
-        html += "</tr>";
-        $('#body_mp').append(html);
-
-        // agrego boton para eliminar fila
-        $('#body_mp').children().last().find('.td_button').html('<button type="button" class="btn btn-danger" onclick="eliminarMPDelProducto(this)">-</button>');
-    }
-
-    // elimino una materia prima de la lista
-    function eliminarMPDelProducto(elem) {
-        console.log($(elem).parent().parent());
-        $(elem).parent().parent().remove();
-    }
-
-
-    function insertarProducto(e) {
-        e.preventDefault();
-        var route = "{{route('productos.store')}}";
-
-        var fd = new FormData(document.getElementById('form_producto_insert'));
-        //fd.append('imagen', $('#imagen')[0].files[0]);
-
-        console.log($('#imagen')[0].files[0]);
-
-        $('.is-invalid').removeClass('is-invalid');
-
-        // ACTUALIZO DATOS
-        $.ajax({
-            url: route,
-            //data: {'_method':'PUT','_token':csrf_token},
-            data: fd,
-            type: 'POST',
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(data) {
-                console.log(data);
-            }
-        }).fail( function(data) {
-            console.log(data.responseJSON.errors);
-            errors = data.responseJSON.errors;
-            for (var err in errors) {
-                $('#'+err.replace(/\./g,'_')).addClass('is-invalid');
-
-
-
-
-                var id_error = '#'+err.replace(/\./g,'_')+'_err';
-                console.log(id_error);
-                $(id_error).html(errors[err][0]);
-            }
-        });
-    }
-
-</script>
-@endsection

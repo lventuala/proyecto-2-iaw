@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
+    private $cant_paginas = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -15,11 +17,26 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        $page = Request()->page ?? 1;
         $materias_primas = MateriaPrima::getAllActivas();
-        $data = [
-            'materias_primas' => $materias_primas
+
+        $view_list = $this->_getListado($page);
+
+        $datos = [
+            'materias_primas' => $materias_primas,
+            'view_list' => $view_list
         ];
-        return view('productos/productos',$data);
+
+        if (Request()->ajax()) {
+            return response()->json($datos);
+        } else {
+            return view('productos/productos',$datos);
+        }
+    }
+
+    private function _getListado($page) {
+        $productos = Producto::getPaginate($this->cant_paginas);
+        return view('productos/productosList', compact('productos','page'))->render();
     }
 
     /**
@@ -56,7 +73,12 @@ class ProductoController extends Controller
 
         Producto::guardarProducto($result,$file);
 
-        return $result;
+        $view_list = $this->_getListado(1);
+
+        if (Request()->ajax()) {
+            return response()->json( ['view_list' => $view_list] );
+        } else {
+        }
     }
 
     /**
