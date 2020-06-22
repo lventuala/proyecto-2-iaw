@@ -10,13 +10,16 @@
                         <a class="nav-link {{ request()->routeIs('usuarios') ? 'active' : '' }}" href="{{route('usuarios')}}">@lang('Usuarios')</a>
                     </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('productos.index') ? 'active' : '' }}" href="{{route('productos.index')}}">@lang('Productos')</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('materias-primas.index') ? 'active' : '' }}" href="{{route('materias-primas.index')}}">@lang('Materias Primas')</a>
-                </li>
+                @if(Auth::user()->estado == 0)
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('productos.index') ? 'active' : '' }}" href="{{route('productos.index')}}">@lang('Productos')</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('materias-primas.index') ? 'active' : '' }}" href="{{route('materias-primas.index')}}">@lang('Materias Primas')</a>
+                    </li>
+                @endif
             </ul>
         </div>
 

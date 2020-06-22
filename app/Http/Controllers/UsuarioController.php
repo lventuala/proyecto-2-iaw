@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
@@ -14,8 +15,26 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = DB::table('usuario')->get();
-        return view('usuarios',$usuarios);
+        $usuarios = User::getUsuarios(Auth::user()->id);
+        return view('usuarios',compact('usuarios'));
+    }
+
+
+
+    /**
+     * Activa el usuario pasado como parametro (cambia estado a 0)
+     */
+    public function activar($id) {
+        User::updateEstado($id,0);
+        return back()->withSuccess('Usuario activado');
+    }
+
+    /**
+     * Desactiva el usuario pasado como parametro (cambia estado a 1)
+     */
+    public function desactivar($id) {
+        User::updateEstado($id,1);
+        return back()->withSuccess('Usuario desactivado');
     }
 
     /**

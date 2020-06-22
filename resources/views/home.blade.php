@@ -2,6 +2,8 @@
 
 @section('home_contenido')
 
-HOME
+    @if(Auth::user()->estado == 1)
+        <p> El administrador no ha activado el usuario actual!!</p>
+    @endif
 
 @endsection

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -38,6 +39,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getUsuarios($not_id = 0) {
+        return User::where('id','!=',$not_id)->get();
+    }
+
+    public static function get($id) {
+        return User::where('id',$id)->get()->first();
+    }
+
+    public static function updateEstado($id,$estado) {
+        $usuario = User::get($id);
+        $usuario->estado = $estado;
+        $usuario->save();
+    }
+
 
     public function roles() {
         return $this
