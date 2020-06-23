@@ -60,15 +60,33 @@ class Producto extends Model
 
             $new_prod->save();
 
+            // actualizo materias primas nueas o actualizadas
             foreach( $prod['mp'] as $mp ) {
-                $existe = Producto::getMP($id,$mp['materia_prima_id']);
+                $existe = Producto::getMP($id,$mp['materia_prima_id'])->first();
                 if ( $existe ) {
                     // existe - actualizo cantidad
                     $new_prod->materiasPrimas()->updateExistingPivot($mp['materia_prima_id'],['cantidad' => $mp['cantidad']]);
                 } else {
                     // no existe - lo agrego
-                    $materia_prima = MateriaPrima::where('id',$mp['materia_prima_id'])->get();
+                    $materia_prima = MateriaPrima::get($mp['materia_prima_id']);
                     $new_prod->materiasPrimas()->attach($materia_prima, ['cantidad' => $mp['cantidad']]);
+                }
+            }
+
+            // quito materias primas elimnadas
+            $mp_all = Producto::getMP_all($id);
+            foreach($mp_all as $mp) {
+                $existe = false;
+                foreach($prod['mp'] as $mp_in) {
+                    if ((int)$mp->materia_prima_id === (int)$mp_in['materia_prima_id']) {
+                        $existe = true;
+                        break;
+                    }
+                }
+
+                if (!$existe) {
+                    // elimino mp del producto
+                    $new_prod->materiasPrimas()->updateExistingPivot($mp->materia_prima_id,['estado' => 1]);
                 }
             }
         });
@@ -92,6 +110,7 @@ class Producto extends Model
         ->select('producto_mp.materia_prima_id', 'producto_mp.cantidad')
         ->where('producto.id',$id)
         ->where('producto_mp.estado',0)
+        ->orderBy('producto_mp.id')
         ->get();
     }
 

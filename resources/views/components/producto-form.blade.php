@@ -103,7 +103,7 @@
                                 <td>
                                     <div class="form-group">
                                         <select
-                                            id="mp_1_materia_prima_id"
+                                            @isset($producto)id="mp_1_materia_prima_id_mod" @else id="mp_1_materia_prima_id" @endisset
                                             name="mp[1][materia_prima_id]"
                                             value="{{old('mp.1.materia_prima_id')}}"
                                             class="form-control"

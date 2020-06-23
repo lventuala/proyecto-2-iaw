@@ -140,7 +140,7 @@
     }
 
     // agrego una materia prima a la lista
-    function agregarMPAlProducto(mod = false, id_mp = "", cantidad = "") {
+    function agregarMPAlProducto(mod = false) {
         str_id = "#body_mp";
         if (mod) {
             str_id = "#body_mp_mod";
@@ -163,22 +163,22 @@
 
         // armmo la fila y la agrego
         html += "</tr>";
-
+/*
         if ( id_mp !== "" ) {
-            html = html.replace('value="'+id_mp+'"', 'selected value="'+id_mp+'"');
+            html = html.replace('value="'+id_mp+'"', 'value="'+id_mp+'" selected');
         } else {
             html = html.replace(' selected','');
             html = html.replace('disabled','disabled selected');
         }
-
+*/
         $(str_id).append(html);
-
+/*
         if (mod) {
             $('#mp_'+new_id+'_cantidad_mod').val(cantidad);
         } else {
             $('#mp_'+new_id+'_cantidad').val(cantidad);
         }
-
+*/
 
         // agrego boton para eliminar fila
         $(str_id).children().last().find('.td_button').html('<button type="button" class="btn btn-danger" onclick="eliminarMPDelProducto(this)">-</button>');
@@ -256,17 +256,21 @@
                     var id = productos_mp[i].materia_prima_id;
                     var cantidad = productos_mp[i].cantidad;
 
-                    if (i == 0){
-                            html = data.view_form;
-                            html = html.replace('selected','');
-                            html = html.replace('value="'+id+'"', 'value="'+id+'" selected')
+                    if (i == 0) {
+                            // agrego listado a interface (dejo el seteo del primer elemento para el final)
+                            var html = data.view_form;
                             $('#mod_producto').html(html);
                             $('#id_mod_producto').modal('show');
-                            $('#mp_1_cantidad_mod').val(cantidad);
                     } else {
-                        agregarMPAlProducto(true,id,cantidad);
+                        agregarMPAlProducto(true);
+                        $('#mp_'+(i+1)+'_materia_prima_id_mod').val(id);
+                        $('#mp_'+(i+1)+'_cantidad_mod').val(cantidad);
                     }
                 }
+
+                // seteo primer elemento
+                $('#mp_1_materia_prima_id_mod').val(productos_mp[0].materia_prima_id);
+                $('#mp_1_cantidad_mod').val(productos_mp[0].cantidad);
             }
         });
     });
