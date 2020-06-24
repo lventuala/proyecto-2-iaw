@@ -15,7 +15,7 @@ class mpForm extends Component
      *
      * @return void
      */
-    public function __construct($categorias,$unidadMedida,$dataMod=null)
+    public function __construct($categorias=[],$unidadMedida=[],$dataMod=null)
     {
         $this->categorias = $categorias;
         $this->unidad_medida = $unidadMedida;
