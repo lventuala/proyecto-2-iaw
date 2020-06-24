@@ -11,7 +11,7 @@
                     Nueva Materia Prima
                 </div>
                 <div class="card-body">
-                    <x-mp-form :categorias=$categorias :unidadMedida=$unidad_medida >
+                    <x-mp-form :categorias="$categorias" :unidadMedida="$unidad_medida" >
                     </x-mp-form>
                 </div>
             </div>
