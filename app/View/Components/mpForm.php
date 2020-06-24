@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class mpForm extends Component
+class MpForm extends Component
 {
     public $categorias;
     public $unidad_medida;
