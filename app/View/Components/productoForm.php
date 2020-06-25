@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class productoForm extends Component
+class ProductoForm extends Component
 {
     public $materias_primas;
     public $producto;
@@ -34,6 +34,12 @@ class productoForm extends Component
 
     public function renderConParametros()
     {
-        return view('components.producto-form',['materias_primas' => $this->materias_primas, 'producto' => $this->producto, 'producto_mp' => $this->producto_mp]);
+        return view(
+            'components.producto-form',
+            [
+                'materias_primas' => $this->materias_primas,
+                'producto' => $this->producto,
+                'producto_mp' => $this->producto_mp
+            ]);
     }
 }

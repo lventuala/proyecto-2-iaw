@@ -1,8 +1,8 @@
 <form
     @isset($producto)
-        id="producto_form_modi" action="#" onsubmit="modificarProducto(event,{{$producto->id}})"
+        id="producto_form_modi" action="#" onsubmit="modificarProducto(this,event,{{$producto->id}},'{{ route("productos.update",$producto->id) }}')"
     @else
-        id="producto_form_alta" action="#" onsubmit="insertarProducto(event)"
+        id="producto_form_alta" action="#" onsubmit="insertarProducto(event,'{{route("productos.store")}}')"
     @endisset
 >
 
@@ -50,8 +50,10 @@
                     <input
                         @isset($producto)
                             id="in_imagen_prod_mod"
+                            onchange="actualizaLabelImagen(this,'#lbl_imagen_mod','#img_upload_mod')"
                         @else
                             id="in_imagen_prod"
+                            onchange="actualizaLabelImagen(this,'#lbl_imagen','#img_upload')"
                             required
                         @endisset
                         name="imagen"
@@ -156,6 +158,7 @@
         <button type="submit" class="btn btn-primary">Aceptar</button>
     @endisset
 </form>
+
 
 
 
