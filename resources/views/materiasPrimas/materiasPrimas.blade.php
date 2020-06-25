@@ -77,6 +77,7 @@
 
 @section('script')
 <script >
+    // ajax para paginacion
     $(document).on('click', '.pagination a', function(e) {
         e.preventDefault();
 
@@ -84,58 +85,8 @@
         var page = $(this).attr('href').split('page=')[1];
         var route = "{{ route('materias-primas.index') }}";
 
-        // recupero las materias primas
-        $.ajax({
-            url: route,
-            data: {page:page},
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                $('#list_ajax').html(data.view_list);
-            }
-        });
+        paginacionProducto(route,page,'#list_ajax');
     });
-
-    // recupero informacion para editar la mp
-    $(document).on('click', '.modi_mp', function(e) {
-        e.preventDefault();
-
-        // recupero id de la materia prima
-        id = $(this).parent().parent().attr('id');
-
-        // armo la ruta para recuperar la info
-        var route = "{{ route('materias-primas.edit',':id') }}";
-        route = route.replace(':id',id.trim());
-
-        // recupero la vista con los campos para editar
-        $.ajax({
-            url: route,
-            data: {},
-            type: 'GET',
-            dataType: 'html',
-            success: function(data) {
-                $('#mod_mp').html(data);
-                $('#id_mod_mp').modal('show');
-            }
-        });
-    });
-
-    // recupero informacion para eliminar la mp
-    $(document).on('click', '.elim_mp', function(e) {
-        id = $(this).parent().parent().attr('id');
-        $('#id_elim_mp').modal('show');
-        $('input[name=_id_elim]').val(id);
-
-        var route = "{{ route('materias-primas.destroy',':id') }}";
-        route = route.replace(':id',id.trim());
-
-        $('#form_elim_mp').attr('action',route);
-
-        $(document).on('click', '#btn_elim_confirmar', function(e) {
-            $('#form_elim_mp').submit();
-        });
-    });
-
 </script>
 @endsection
 

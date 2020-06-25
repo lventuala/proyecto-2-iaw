@@ -18,8 +18,6 @@
 </head>
 <body>
 
-
-
     <div class="container-fluid">
         @include('layouts.nav')
 
@@ -29,9 +27,8 @@
 
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/productos.js') }}"></script>
+        <script src="{{ asset('js/mp.js') }}"></script>
         <script src="https://unpkg.com/feather-icons"></script>
-
-
         @yield('script')
     </div>
 

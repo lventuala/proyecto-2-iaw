@@ -1,7 +1,7 @@
 
 <form name="mp_form"
     @isset($data_mod)
-        id="mp_form_modi" action="#" onsubmit="modificar(event,{{$data_mod->id}})"
+        id="mp_form_modi" action="#" onsubmit="modificarMP(event,{{$data_mod->id}},'{{route("materias-primas.update",$data_mod->id)}}')"
     @else
         id="mp_form_alta" action="{{route('materias-primas.store')}}" method="POST"
     @endisset
@@ -85,44 +85,3 @@
         <button id="btn-aceptar-mp" class="btn btn-primary">Aceptar</button>
     @endisset
 </form>
-
-<script>
-    function modificar(e,id) {
-        e.preventDefault();
-        var route = "{{route('materias-primas.update',':id')}}";
-        route = route.replace(':id',id);
-
-        var fd = new FormData(document.getElementById('mp_form_modi'));
-
-        // ACTUALIZO DATOS
-        $.ajax({
-            url: route,
-            //data: {'_method':'PUT','_token':csrf_token},
-            data: fd,
-            type: 'POST',
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(data) {
-                // actualizo info en la lista
-                $('#body_list_mp > #'+id+' > td').eq(0).html(data.nombre);
-                $('#body_list_mp > #'+id+' > td').eq(1).html(data.categoria);
-                $('#body_list_mp > #'+id+' > td').eq(2).html(data.uni_medida);
-                $('#body_list_mp > #'+id+' > td').eq(3).html(data.cantidad);
-
-                // cierro modal
-                $('#btn-cancelar-mp').click();
-            }
-        }).fail( function(data) {
-            console.log(data.responseJSON.errors);
-            errors = data.responseJSON.errors;
-            for (var err in errors) {
-                $('input[name='+err+']').addClass('is-invalid');
-                //.invalid-feedback
-                $('input[name='+err+']').parent().find('.invalid-feedback').html(errors[err]);
-            }
-        });
-
-    }
-
-</script>

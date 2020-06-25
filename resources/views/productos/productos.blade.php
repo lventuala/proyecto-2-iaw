@@ -91,7 +91,6 @@
 
         paginacionProducto(route,page,'#list_ajax');
     });
-
 </script>
 
 @endsection
