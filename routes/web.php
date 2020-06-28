@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/usuarios', 'UsuarioController@index')->name('usuarios');
-Route::put('/usuarios/activar/{id}', 'UsuarioController@activar')->name('usuarios.activar');
-Route::put('/usuarios/desactivar/{id}', 'UsuarioController@desactivar')->name('usuarios.desactivar');
+Route::get('/usuarios', 'UsuarioController@index')->name('usuarios')->middleware('auth');
+Route::put('/usuarios/activar/{id}', 'UsuarioController@activar')->name('usuarios.activar')->middleware('auth');;
+Route::put('/usuarios/desactivar/{id}', 'UsuarioController@desactivar')->name('usuarios.desactivar')->middleware('auth');;
 
-Route::resource('materias-primas', 'MateriaPrimaController');
-Route::resource('productos', 'ProductoController');
+Route::resource('materias-primas', 'MateriaPrimaController')->middleware('auth');;
+Route::resource('productos', 'ProductoController')->middleware('auth');
+
 
 
 Route::get('/', function () {

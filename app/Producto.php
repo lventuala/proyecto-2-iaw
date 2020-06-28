@@ -26,6 +26,14 @@ class Producto extends Model
         ->paginate($cant);
     }
 
+    public static function getAll() {
+        return Producto::
+        select('producto.id', 'producto.nombre', 'producto.descripcion', 'producto.nombre_img')
+        ->where('producto.estado','0')
+        ->orderBy('producto.nombre')
+        ->get();
+    }
+
     public static function guardarProducto($prod,$file) {
         DB::transaction(function () use ($prod,$file) {
             // inserto producto

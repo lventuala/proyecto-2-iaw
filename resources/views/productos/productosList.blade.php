@@ -15,12 +15,10 @@
                     <td>{{$p->nombre}}</td>
                     <td>{{$p->descripcion}}</td>
                     <td><img src="data:image/gif;base64,{{stream_get_contents($p->img)}}" class="img_Thumbnail"></td>
-                    <td>
+                    <td class="btn-group btn-group-sm">
                         <button class="btn btn-primary" onclick="abrirModificarProducto(this,event,'{{ route("productos.edit",$p->id) }}')">
                             <i class="material-icons md-12">edit</i>
                         </button>
-
-
 
                         <button class="btn btn-danger" onclick="eliminarProducto({{$p->id}},'{{ route("productos.destroy",$p->id) }}')">
                             <i class="material-icons md-12">delete</i>

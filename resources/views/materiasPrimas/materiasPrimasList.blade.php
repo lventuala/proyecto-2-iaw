@@ -17,13 +17,13 @@
                     <td>{{$mp->categoria}}</td>
                     <td>{{$mp->uni_medida}}</td>
                     <td>{{$mp->cantidad}}</td>
-                    <td>
+                    <td class="btn-group btn-group-sm">
                         <button class="btn btn-primary" onclick="abrirModificarMP(event,{{$mp->id}},'{{ route("materias-primas.edit",$mp->id) }}')">
-                            <i class="material-icons md-18">edit</i>
+                            <i class="material-icons md-12">edit</i>
                         </button>
 
                         <button class="btn btn-danger" onclick="eliminarMP({{$mp->id}},'{{ route("materias-primas.destroy",$mp->id) }}')">
-                            <i class="material-icons md-18">delete</i>
+                            <i class="material-icons md-12">delete</i>
                         </button>
                     </td>
 

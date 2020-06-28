@@ -35,6 +35,12 @@ class ProductoController extends Controller
         }
     }
 
+    public function productos() {
+        $page = Request()->page ?? 1;
+        $productos = Producto::getAll();
+        return response()->json(["productos" => $productos]);
+    }
+
     private function _getListado($page) {
         $productos = Producto::getPaginate($this->cant_paginas);
         return view('productos/productosList', compact('productos','page'))->render();

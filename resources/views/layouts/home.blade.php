@@ -23,7 +23,9 @@
 
         @include('layouts.mensaje')
 
-        @yield('home_contenido')
+        <div class="pt-2">
+            @yield('home_contenido')
+        </div>
 
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/productos.js') }}"></script>

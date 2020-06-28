@@ -154,7 +154,7 @@ window.agregarMPAlProducto = function () {
   html += "</tr>";
   $(id_body).append(html); // agrego boton para eliminar fila
 
-  $(id_body).children().last().find('.td_button').html('<button type="button" class="btn btn-danger" onclick="eliminarMPDelProducto(this)">-</button>');
+  $(id_body).children().last().find('.td_button').html('<button type="button" class="btn btn-danger btn-sm" onclick="eliminarMPDelProducto(this)"> - </button>');
 }; // elimino una materia prima de la lista
 
 

@@ -12,34 +12,21 @@ class CategoriaMPSeeder extends Seeder
      */
     public function run()
     {
-        $cat = new CategoriaMP();
-        $cat->nombre = 'Carnes Rojas';
-        $cat->estado = 0;
-        $cat->save();
+        $datos = [
+            ['Carnes Rojas',0],
+            ['Carnes Blancas',0],
+            ['Condimentos',0],
+            ['Aderezos',0],
+            ['Liquido',0],
+            ['Verduras',0],
+            ['Harinas',0],
+        ];
 
-        $cat = new CategoriaMP();
-        $cat->nombre = 'Carnes Blancas';
-        $cat->estado = 0;
-        $cat->save();
-
-        $cat = new CategoriaMP();
-        $cat->nombre = 'Condimentos';
-        $cat->estado = 0;
-        $cat->save();
-
-        $cat = new CategoriaMP();
-        $cat->nombre = 'Aderezos';
-        $cat->estado = 0;
-        $cat->save();
-
-        $cat = new CategoriaMP();
-        $cat->nombre = 'Bebidas';
-        $cat->estado = 0;
-        $cat->save();
-
-        $cat = new CategoriaMP();
-        $cat->nombre = 'Verduras';
-        $cat->estado = 0;
-        $cat->save();
+        foreach($datos as $d) {
+            $cat = new CategoriaMP();
+            $cat->nombre = $d[0];
+            $cat->estado = $d[1];
+            $cat->save();
+        }
     }
 }

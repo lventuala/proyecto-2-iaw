@@ -97,7 +97,14 @@
                             <tr>
                                 <th class="w-75" scope="col">MP | Uni. Medida</th>
                                 <th class="w-25" scope="col">Cantidad</th>
-                                <th><button type="button" class="btn btn-primary" @isset($producto) onclick="agregarMPAlProducto(true)" @else onclick="agregarMPAlProducto()" @endisset> + </button></th>
+                                <th>
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary btn-sm"
+                                        @isset($producto) onclick="agregarMPAlProducto(true)" @else onclick="agregarMPAlProducto()" @endisset>
+                                        +
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody @isset($producto) id="body_mp_mod" @else id="body_mp" @endisset>
@@ -132,7 +139,7 @@
                                         class="form-control {{ $errors->has('mp.1.cantidad') ? 'is-invalid' : '' }}"
                                         value="{{old('mp.1.cantidad')}}"
                                         type="number"
-                                        step="0.1"
+                                        step="0.001"
                                     >
 
                                         <div id="mp_1_cantidad_err" class="invalid-feedback">
@@ -148,7 +155,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     @isset($producto)
