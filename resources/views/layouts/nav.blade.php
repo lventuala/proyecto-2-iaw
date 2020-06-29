@@ -22,13 +22,23 @@
                     </li>
                 @endif
 
-                @if(Auth::user()->estado == 0)
+                @if(Auth::user()->hasRol('base'))
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('productos.index') ? 'active' : '' }}" href="{{route('productos.index')}}">@lang('Productos')</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('materias-primas.index') ? 'active' : '' }}" href="{{route('materias-primas.index')}}">@lang('Materias Primas')</a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->hasRol('usuario'))
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('productosPedidos') ? 'active' : '' }}" href="{{route('productosPedidos')}}">@lang('Generar Pedido')</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('pedidos.index') ? 'active' : '' }}" href="{{route('pedidos.index')}}">@lang('Pedidos Generados')</a>
                     </li>
                 @endif
             </ul>

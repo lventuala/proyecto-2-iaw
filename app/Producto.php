@@ -18,6 +18,9 @@ class Producto extends Model
         'nombre', 'descripcion', 'estado', 'nombre_img', 'img'
     ];
 
+    /**
+     * Recupera los $cant productos
+     */
     public static function getPaginate($cant) {
         return Producto::
         select('producto.id', 'producto.nombre', 'producto.descripcion', 'producto.nombre_img', 'producto.img')
@@ -26,14 +29,20 @@ class Producto extends Model
         ->paginate($cant);
     }
 
+    /**
+     * Recupera todos los productos cargados
+     */
     public static function getAll() {
         return Producto::
-        select('producto.id', 'producto.nombre', 'producto.descripcion', 'producto.nombre_img')
+        select('producto.id', 'producto.nombre', 'producto.descripcion', 'producto.nombre_img', 'producto.img')
         ->where('producto.estado','0')
         ->orderBy('producto.nombre')
         ->get();
     }
 
+    /**
+     * Guarda un nuevo producto
+     */
     public static function guardarProducto($prod,$file) {
         DB::transaction(function () use ($prod,$file) {
             // inserto producto
@@ -100,10 +109,16 @@ class Producto extends Model
         });
     }
 
+    /**
+     * Recupera un producto particular
+     */
     public static function get($id) {
         return Producto::where('id',$id)->get()->first();
     }
 
+    /**
+     * Recupera una materia prima de un producto
+     */
     public static function getMP($id,$id_mp) {
         return Producto::join('producto_mp', 'producto_mp.producto_id', '=', 'producto.id')
         ->select('producto_mp.materia_prima_id', 'producto_mp.cantidad')
@@ -113,6 +128,9 @@ class Producto extends Model
         ->get();
     }
 
+    /**
+     * Recupera todas las materias primas de un producto
+     */
     public static function getMP_all($id) {
         return Producto::join('producto_mp', 'producto_mp.producto_id', '=', 'producto.id')
         ->select('producto_mp.materia_prima_id', 'producto_mp.cantidad')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\MateriaPrima;
+use App\Pedido;
 use App\Producto;
 use App\View\Components\productoForm;
 use Illuminate\Http\Request;
@@ -35,10 +36,45 @@ class ProductoController extends Controller
         }
     }
 
+    /**
+     * Recuperar productos desde la API
+     */
     public function productos() {
         $page = Request()->page ?? 1;
         $productos = Producto::getAll();
+        foreach($productos as $p) {
+            $p->img = stream_get_contents($p->img);
+        }
+
         return response()->json(["productos" => $productos]);
+    }
+
+    /**
+     * Mostrar los productos para realizar un pedido
+     */
+    public function productosPedidos() {
+        $productos = Producto::getAll();
+        foreach($productos as $p) {
+            $p->img = stream_get_contents($p->img);
+
+            // calculo cantidad maxima para pedir
+            $prod = Producto::get($p->id);
+            $materias_primas = $prod->getMP_all($p->id);
+            $max = 0;
+            foreach ($materias_primas as $mp) {
+                $mprima = MateriaPrima::get($mp->materia_prima_id);
+                $max_aux = $mprima->cantidad / $mp->cantidad;
+                if ( $max === 0 ) {
+                    $max = $max_aux;
+                } else {
+                    $max = min($max,$max_aux);
+                }
+            }
+
+            $p->cant_maxima = $max;
+        }
+
+        return view('productos/productosPedidos',["productos" => $productos]);
     }
 
     private function _getListado($page) {

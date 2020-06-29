@@ -27,7 +27,7 @@
 
                 </tr>
             @empty
-                <p>No hay materias primas</p>
+                <p>No hay productos para mostrar</p>
             @endforelse
         @endisset
     </tbody>

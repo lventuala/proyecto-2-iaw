@@ -14,14 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// visible para usuarios registrados
 Route::get('/usuarios', 'UsuarioController@index')->name('usuarios')->middleware('auth');
-Route::put('/usuarios/activar/{id}', 'UsuarioController@activar')->name('usuarios.activar')->middleware('auth');;
-Route::put('/usuarios/desactivar/{id}', 'UsuarioController@desactivar')->name('usuarios.desactivar')->middleware('auth');;
+Route::put('/usuarios/activar/{id}', 'UsuarioController@activar')->name('usuarios.activar')->middleware('auth');
+Route::put('/usuarios/desactivar/{id}', 'UsuarioController@desactivar')->name('usuarios.desactivar')->middleware('auth');
 
-Route::resource('materias-primas', 'MateriaPrimaController')->middleware('auth');;
+Route::resource('materias-primas', 'MateriaPrimaController')->middleware('auth');
 Route::resource('productos', 'ProductoController')->middleware('auth');
+Route::resource('pedidos', 'PedidoController')->middleware('auth');
 
+Route::get('/productosPedidos', 'ProductoController@productosPedidos')->name('productosPedidos')->middleware('auth');
 
+// visible para todos
+Route::get('/productosAll', 'ProductoController@productos')->name('productosAll');
 
 Route::get('/', function () {
     return view('inicio');

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnidadMedidaSeeder::class);
         $this->call(CategoriaMPSeeder::class);
         $this->call(MateriaPrimaSeeder::class);
+        $this->call(ProductoSeeder::class);
     }
 }

@@ -139,7 +139,7 @@
                                         class="form-control {{ $errors->has('mp.1.cantidad') ? 'is-invalid' : '' }}"
                                         value="{{old('mp.1.cantidad')}}"
                                         type="number"
-                                        step="0.001"
+                                        step="0.1"
                                     >
 
                                         <div id="mp_1_cantidad_err" class="invalid-feedback">

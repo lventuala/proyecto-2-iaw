@@ -33,6 +33,10 @@ class MateriaPrimaSeeder extends Seeder
             ['Espinaca',5,0,$um_kg->id,$c_verdura->id],
             ['Papa',30,0,$um_kg->id,$c_verdura->id],
             ['Cebolla',10,0,$um_kg->id,$c_verdura->id],
+            ['Zanahoria',10,0,$um_kg->id,$c_verdura->id],
+            ['Tomate',5,0,$um_kg->id,$c_verdura->id],
+            ['Lechuga',1,0,$um_kg->id,$c_verdura->id],
+            ['Huevo',30,0,$um_uni->id,$c_verdura->id],
 
             ['Vino Blanco',10,0,$um_l->id,$c_bebida->id],
             ['Vino Tinto',10,0,$um_l->id,$c_bebida->id],
@@ -40,16 +44,23 @@ class MateriaPrimaSeeder extends Seeder
             ['Pure de Tomate',5,0,$um_l->id,$c_bebida->id],
 
             ['Carne Picada',30,0,$um_kg->id,$c_carnes_r->id],
+            ['Relleno Empanadas Carne',15,0,$um_kg->id,$c_carnes_r->id],
+            ['Relleno Empanadas Pollo',15,0,$um_kg->id,$c_carnes_r->id],
+            ['Medallon de Carne',50,0,$um_uni->id,$c_carnes_r->id],
             ['Pollo',20,0,$um_kg->id,$c_carnes_b->id],
             ['Pescado',20,0,$um_kg->id,$c_carnes_b->id],
+            ['Milanesa',30,0,$um_kg->id,$c_carnes_b->id],
 
             ['Ajo en Polvo',500,0,$um_g->id,$c_condimento->id],
             ['Pimienta',500,0,$um_g->id,$c_condimento->id],
             ['Aji Molido',500,0,$um_g->id,$c_condimento->id],
             ['Oregano',500,0,$um_g->id,$c_condimento->id],
+            ['Nuez Moscada',500,0,$um_g->id,$c_condimento->id],
+            ['Sal',500,0,$um_g->id,$c_condimento->id],
 
             ['Tapas de Empanada',100,0,$um_uni->id,$c_harinas->id],
             ['Tallarines',10,0,$um_kg->id,$c_harinas->id],
+            ['Tapa de Lasagna',50,0,$um_uni->id,$c_harinas->id],
 
             ['Mayonesa',5,0,$um_kg->id,$c_aderezo->id],
             ['Savora',5,0,$um_kg->id,$c_aderezo->id],
