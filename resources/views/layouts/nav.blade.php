@@ -22,7 +22,7 @@
                     </li>
                 @endif
 
-                @if(Auth::user()->hasRol('base'))
+                @if(Auth::user()->hasRol('base') && Auth::user()->estado == 0)
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('productos.index') ? 'active' : '' }}" href="{{route('productos.index')}}">@lang('Productos')</a>
                     </li>
@@ -32,7 +32,7 @@
                     </li>
                 @endif
 
-                @if(Auth::user()->hasRol('usuario'))
+                @if(Auth::user()->hasRol('usuario')  && Auth::user()->estado == 0)
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('productosPedidos') ? 'active' : '' }}" href="{{route('productosPedidos')}}">@lang('Generar Pedido')</a>
                     </li>
