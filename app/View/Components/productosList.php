@@ -4,16 +4,19 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class pedido-list extends Component
+class ProductosList extends Component
 {
+
+    public $productos;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($productos=[])
     {
-        //
+        $this->productos = $productos;
     }
 
     /**
@@ -23,6 +26,6 @@ class pedido-list extends Component
      */
     public function render()
     {
-        return view('components.pedido-list');
+        return view('components.productos-list',["productos" => $this->productos]);
     }
 }

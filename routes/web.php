@@ -1,5 +1,6 @@
 <?php
 
+use App\Producto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,11 +27,15 @@ Route::resource('pedidos', 'PedidoController')->middleware('auth');
 Route::get('/productosPedidos', 'ProductoController@productosPedidos')->name('productosPedidos')->middleware('auth');
 
 // visible para todos
-Route::get('/productosAll', 'ProductoController@productos')->name('productosAll');
+Route::get('/productosAll', 'ProductoController@productosWeb')->name('productosAll');
 
+Route::get('/', 'InicioController@inicio');
+
+/*
 Route::get('/', function () {
     return view('inicio');
 });
+*/
 
 Route::view('URI', 'viewName');
 

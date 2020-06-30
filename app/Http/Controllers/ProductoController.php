@@ -50,6 +50,19 @@ class ProductoController extends Controller
     }
 
     /**
+     * Recuperar productos desde la WEB
+     */
+    public function productosWeb() {
+        $page = Request()->page ?? 1;
+        $productos = Producto::getAll();
+        foreach($productos as $p) {
+            $p->img = stream_get_contents($p->img);
+        }
+
+        return view('inicio',['productos' => $productos]);
+    }
+
+    /**
      * Mostrar los productos para realizar un pedido
      */
     public function productosPedidos() {
