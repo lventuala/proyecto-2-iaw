@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -27,6 +28,25 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+
+    /**
+     * Login para utilizar con la API
+     */
+    public function loginApi()
+    {
+        $this->validateLogin(Request());
+
+        if ($this->attemptLogin(Request())) {
+            $user = Request()->user();
+            $new_token = $user->updateToken();
+
+            return response()->json([
+                'token' => $new_token,
+            ]);
+        }
+
+        return $this->sendFailedLoginResponse(Request());
+    }
 
     /**
      * Create a new controller instance.

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -59,6 +60,16 @@ class User extends Authenticatable
         return $this
             ->belongsToMany('App\Rol', 'rol_usuario', 'usuario_id', 'rol_id')
             ->withTimestamps();
+    }
+
+    /**
+     * Actualizo token para uso por API
+     */
+    public function updateToken() {
+        $new_token = Str::random(80);
+        $this->api_token = $new_token;
+        $this->save();
+        return $new_token;
     }
 
     public function hasRol($rol) {

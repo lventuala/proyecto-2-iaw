@@ -3,6 +3,7 @@
 use App\Rol;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class UsuarioTableSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class UsuarioTableSeeder extends Seeder
         $user->nombre = 'Usuario Admin';
         $user->email = 'usuario_admin@ejemplo.com';
         $user->password = bcrypt('123');
+        $user->api_token = Str::random(80);
         $user->estado = 0;
         $user->save();
         $user->roles()->attach($rol_admin);
@@ -29,6 +31,7 @@ class UsuarioTableSeeder extends Seeder
         $user->nombre = 'Usuario Base';
         $user->email = 'usuario_base@ejemplo.com';
         $user->password = bcrypt('123');
+        $user->api_token = Str::random(80);
         $user->save();
         $user->roles()->attach($rol_base);
 
@@ -36,6 +39,7 @@ class UsuarioTableSeeder extends Seeder
         $user->nombre = 'Usuario';
         $user->email = 'usuario@ejemplo.com';
         $user->password = bcrypt('123');
+        $user->api_token = Str::random(80);
         $user->save();
         $user->roles()->attach($rol_usuario);
      }
