@@ -18,6 +18,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::get('/mp', 'MateriaPrimaController@indexApi');
 });
 
 Route::post('/login','Auth\LoginController@loginApi');

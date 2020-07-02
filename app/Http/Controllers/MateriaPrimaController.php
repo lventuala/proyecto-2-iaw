@@ -51,6 +51,28 @@ class MateriaPrimaController extends Controller
     }
 
     /**
+     * Recuperar las materias primas por API
+     */
+    public function indexApi(Request $request)
+    {
+        $page = $request->page ?? 1;
+
+        // recupero materias primas paginando de a 10
+        $materias_primas = MateriaPrima::getPaginate(10);
+
+        // preparo datos para enviar
+        $datos = [
+            'materias_primas' => $materias_primas,
+            'categorias' => $this->categorias,
+            'unidad_medida' => $this->unidad_medida,
+            'page' => $page
+        ];
+
+        // devuelvo resultados
+        return response()->json($datos);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
