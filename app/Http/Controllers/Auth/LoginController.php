@@ -42,10 +42,32 @@ class LoginController extends Controller
 
             return response()->json([
                 'token' => $new_token,
+                'error' => false
             ]);
         }
 
-        return $this->sendFailedLoginResponse(Request());
+        //return $this->sendFailedLoginResponse(Request());
+        return response()->json([
+            'error' => true,
+            'msn_error' => 'Datos incorrectos'
+        ]);
+    }
+
+    /**
+     * Logout para utilizar con la API
+     */
+    public function logoutApi()
+    {
+        if ($response = $this->loggedOut(Request())) {
+            $user = Request()->user();
+            $user->updateToken();
+
+            return $response;
+        }
+
+        return response()->json([
+            'msn_error' => 'ERROR INTERNO'
+        ]);
     }
 
     /**

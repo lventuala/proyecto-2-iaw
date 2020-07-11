@@ -19,10 +19,13 @@ Route::group(['middleware' => 'auth:api'], function() {
         return $request->user();
     });
 
+
+
     Route::get('/mp', 'MateriaPrimaController@indexApi');
 });
 
 Route::post('/login','Auth\LoginController@loginApi');
+Route::post('/logout','Auth\LoginController@logoutApi');
 
 Route::get('/productosAll', 'ProductoController@productos')->name('productosAll');
 
