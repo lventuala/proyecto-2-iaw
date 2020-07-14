@@ -45,6 +45,15 @@ class User extends Authenticatable
         return User::where('id','!=',$not_id)->get();
     }
 
+    public static function getUsuarioRoles($id) {
+        return User::
+        join('rol_usuario','rol_usuario.usuario_id','=','usuario.id')
+        ->join('rol','rol.id','=','rol_usuario.rol_id')
+        ->select('usuario.nombre', 'usuario.email','usuario.estado', 'rol.nombre as rol')
+        ->where('usuario.id', '=', $id)
+        ->get();
+    }
+
     public static function get($id) {
         return User::where('id',$id)->get()->first();
     }

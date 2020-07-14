@@ -19,8 +19,6 @@ class UsuarioController extends Controller
         return view('usuarios',compact('usuarios'));
     }
 
-
-
     /**
      * Activa el usuario pasado como parametro (cambia estado a 0)
      */
@@ -101,5 +99,35 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * METODOS PARA LA API
+     */
+    public function getUsuarioApi() {
+        $user = Request()->user();
+        $res = User::getUsuarioRoles($user->id);
+        $usuario_final = array();
+        $roles = array(
+            'admin' => false,
+            'base' => false,
+            'usuario' => false
+        );
+        foreach ($res as $r) {
+            if($usuario_final == null) {
+                $usuario_final['nombre'] = $user->nombre;
+                $usuario_final['email'] = $user->email;
+                $usuario_final['estado'] = $user->estado;
+            }
+
+            $roles[$r->rol] = true;
+        }
+
+        $usuario_final['roles'] = $roles;
+
+        return response()->json(array(
+            'usuario' => $usuario_final,
+            'error' => false
+        ));
     }
 }
