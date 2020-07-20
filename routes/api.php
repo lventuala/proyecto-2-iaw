@@ -22,6 +22,11 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/user','UsuarioController@getUsuarioApi');
 
     Route::get('/mp', 'MateriaPrimaController@indexApi');
+
+    Route::put('/updateMP/{id}', 'MateriaPrimaController@updateApi');
+
+
+
 });
 
 Route::post('/login','Auth\LoginController@loginApi');

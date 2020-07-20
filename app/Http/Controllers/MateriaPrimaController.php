@@ -51,28 +51,6 @@ class MateriaPrimaController extends Controller
     }
 
     /**
-     * Recuperar las materias primas por API
-     */
-    public function indexApi(Request $request)
-    {
-        $page = $request->page ?? 1;
-
-        // recupero materias primas paginando de a 10
-        $materias_primas = MateriaPrima::getPaginate(10);
-
-        // preparo datos para enviar
-        $datos = [
-            'materias_primas' => $materias_primas,
-            'categorias' => $this->categorias,
-            'unidad_medida' => $this->unidad_medida,
-            'page' => $page
-        ];
-
-        // devuelvo resultados
-        return response()->json($datos);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -194,4 +172,57 @@ class MateriaPrimaController extends Controller
         // vuelvo a la vista con mensaje de exito
         return back()->withSuccess('La materia prima se elimino correctamente');
     }
+
+    /*****************************************************************
+     * METODOS PARA LA API
+     **********************************/
+
+    /**
+     * Recuperar las materias primas por API
+     */
+    public function indexApi(Request $request)
+    {
+        $page = $request->page ?? 1;
+
+        // recupero materias primas paginando de a 10
+        $materias_primas = MateriaPrima::getPaginate(10);
+
+        // preparo datos para enviar
+        $datos = [
+            'materias_primas' => $materias_primas,
+            'categorias' => $this->categorias,
+            'unidad_medida' => $this->unidad_medida,
+            'page' => $page
+        ];
+
+        // devuelvo resultados
+        return response()->json($datos);
+    }
+
+    public function updateApi(Request $request,$id) {
+        $data = $request->all();
+
+        $info = $request->validate([
+            'nombre' => 'required',
+            'id_um' => 'required|numeric',
+            'id_categoria' => 'required|numeric',
+            'cantidad' => 'required'
+        ]);
+
+        // actualizo mp
+        $mp = MateriaPrima::get($id);
+        $mp->nombre = $info['nombre'];
+        $mp->unidad_medida_id = $info['id_um'];
+        $mp->categoria_mp_id = $info['id_categoria'];
+        $mp->cantidad = $info['cantidad'];
+        $mp->save();
+
+        // recupero registro para devolverlo
+        $mp = MateriaPrima::getForList($id);
+
+        return response()->json($mp);
+    }
+
+
+
 }

@@ -108,11 +108,14 @@ class UsuarioController extends Controller
         $user = Request()->user();
         $res = User::getUsuarioRoles($user->id);
         $usuario_final = array();
+
+        // seteo roles del usuario
         $roles = array(
             'admin' => false,
             'base' => false,
             'usuario' => false
         );
+
         foreach ($res as $r) {
             if($usuario_final == null) {
                 $usuario_final['nombre'] = $user->nombre;
@@ -123,11 +126,33 @@ class UsuarioController extends Controller
             $roles[$r->rol] = true;
         }
 
+        // seteo funciones de acuerdo al rol que tenga el usuario
+        $funciones = array();
+        $funciones [] = array('nombre' => 'Home', 'url' => '/home');
+        $url_default = "";
+
+        if ($roles['admin']) {
+            $funciones [] = array('nombre' => 'Usuarios', 'url' => '/usuarios');
+            $funciones [] = array('nombre' => 'Productos', 'url' => '/productos');
+            $funciones [] = array('nombre' => 'Materias Primas', 'url' => '/materias-primas');
+            $url_default = "/productos";
+        } else if ($roles['base']) {
+            $funciones [] = array('nombre' => 'Productos', 'url' => '/productos');
+            $funciones [] = array('nombre' => 'Materias Primas', 'url' => '/materias-primas');
+            $url_default = "/productos";
+        } else if ($roles['usuario']) {
+            $funciones [] = array('nombre' => 'Generar Pedido', 'url' => '/generar-pedido');
+            $funciones [] = array('nombre' => 'Pedidos Generados', 'url' => '/pedidos-generados');
+            $url_default = "/generar-pedido";
+        }
+
         $usuario_final['roles'] = $roles;
+        $usuario_final['funciones'] = $funciones;
+        $usuario_final['url_default'] = $url_default;
 
         return response()->json(array(
             'usuario' => $usuario_final,
-            'error' => false
+            'error' => false,
         ));
     }
 }
