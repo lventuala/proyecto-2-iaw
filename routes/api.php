@@ -24,6 +24,10 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/mp/store', 'MateriaPrimaController@storeApi');
     Route::delete('/mp/destroy/{id}', 'MateriaPrimaController@destroyApi');
 
+    // listar y ABM productos
+    Route::get('/producto/index', 'ProductoController@indexApi');
+
+
 });
 
 Route::post('/login','Auth\LoginController@loginApi');

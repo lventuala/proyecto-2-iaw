@@ -220,4 +220,37 @@ class ProductoController extends Controller
         // vuelvo a la vista con mensaje de exito
         return back()->withSuccess('El producto se elimino correctamente');
     }
+
+    /*****************************************************************
+     * METODOS PARA LA API
+     **********************************/
+
+    public function indexApi(Request $request)
+    {
+        $page = $request->page ?? 1;
+        $materias_primas = MateriaPrima::getAllActivas();
+
+        $productos = Producto::getPaginate($this->cant_paginas);
+        foreach($productos as $p) {
+            $p->img = stream_get_contents($p->img);
+
+            $mps = Producto::getMP_all($p->id);
+            $p->mps = $mps;
+        }
+
+        $datos = [
+            'productos' => $productos,
+            'materias_primas' => $materias_primas,
+            'page' => $page
+        ];
+
+        /*$datos = [
+            "RESULT" => "OK"
+        ];*/
+
+        // devuelvo resultados
+        return response()->json($datos);
+    }
+
+
 }
