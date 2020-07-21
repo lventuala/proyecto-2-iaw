@@ -15,17 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:api'], function() {
-    /*Route::get('/user', function (Request $request) {
-        return $request->user();
-    });*/
-
+    // recuperar usuario
     Route::get('/user','UsuarioController@getUsuarioApi');
 
-    Route::get('/mp', 'MateriaPrimaController@indexApi');
-
-    Route::put('/updateMP/{id}', 'MateriaPrimaController@updateApi');
-
-
+    // listar y ABM de materias primas
+    Route::get('/mp/index', 'MateriaPrimaController@indexApi');
+    Route::put('/mp/update/{id}', 'MateriaPrimaController@updateApi');
+    Route::post('/mp/store', 'MateriaPrimaController@storeApi');
+    Route::delete('/mp/destroy/{id}', 'MateriaPrimaController@destroyApi');
 
 });
 

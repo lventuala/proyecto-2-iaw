@@ -199,6 +199,9 @@ class MateriaPrimaController extends Controller
         return response()->json($datos);
     }
 
+    /**
+     * actualiza una materia prima
+     */
     public function updateApi(Request $request,$id) {
         $data = $request->all();
 
@@ -223,6 +226,42 @@ class MateriaPrimaController extends Controller
         return response()->json($mp);
     }
 
+    /**
+     * guarda una nueva materia prima
+     */
+    public function storeApi(Request $request) {
+        // valido datos de entrada
+        $info = $request->validate([
+            'nombre' => 'required',
+            'id_um' => 'required|numeric',
+            'id_categoria' => 'required|numeric',
+            'cantidad' => 'required'
+        ]);
+
+        // preparo la materia prima y guardo
+        $mp = new MateriaPrima();
+        $mp->nombre = $info['nombre'];
+        $mp->unidad_medida_id = $info['id_um'];
+        $mp->categoria_mp_id = $info['id_categoria'];
+        $mp->cantidad = $info['cantidad'];
+        $mp->estado = 0;
+        $mp->save();
+
+        return response()->json($mp);
+    }
+
+    /**
+     * Elimina una materia prima -> cambia estado
+     */
+    public function destroyApi($id)
+    {
+        $mp = MateriaPrima::get($id);
+        $mp->estado = 1;
+        $mp->save();
+
+        // vuelvo a la vista con mensaje de exito
+        return response()->json(array('estado' => 1));
+    }
 
 
 }

@@ -24,7 +24,7 @@ class MateriaPrima extends Model
     public static function getForList($id) {
         return MateriaPrima::join('unidad_medida','unidad_medida.id', '=', 'unidad_medida_id')
         ->join('categoria_mp','categoria_mp.id', '=', 'categoria_mp_id')
-        ->select('materia_prima.id','materia_prima.nombre', 'cantidad', 'descripcion as uni_medida', 'categoria_mp.nombre as categoria')
+        ->select('materia_prima.id','materia_prima.nombre', 'cantidad', 'descripcion as uni_medida', 'categoria_mp.nombre as categoria', 'unidad_medida.id as id_um', 'categoria_mp.id as id_categoria')
         ->where('materia_prima.id',$id)->get()->first();
     }
 
