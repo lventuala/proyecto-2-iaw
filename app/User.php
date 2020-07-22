@@ -41,6 +41,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getUsuario($id) {
+        return User::where('id','=',$id)->get()->first();
+    }
+
     public static function getUsuarios($not_id = 0) {
         return User::where('id','!=',$not_id)->get();
     }

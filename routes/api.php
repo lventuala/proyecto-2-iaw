@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:api'], function() {
-    // recuperar usuario
-    Route::get('/user','UsuarioController@getUsuarioApi');
+
 
     // listar y ABM de materias primas
     Route::get('/mp/index', 'MateriaPrimaController@indexApi');
@@ -27,7 +26,11 @@ Route::group(['middleware' => 'auth:api'], function() {
     // listar y ABM productos
     Route::get('/producto/index', 'ProductoController@indexApi');
 
-
+    // usuario logueadoy lista de usuarios
+    Route::get('/user','UsuarioController@getUsuarioApi');
+    Route::get('/usuario/index', 'UsuarioController@indexApi');
+    Route::put('/usuario/activar/{id}', 'UsuarioController@activarApi');
+    Route::put('/usuario/desactivar/{id}', 'UsuarioController@desactivarApi');
 });
 
 Route::post('/login','Auth\LoginController@loginApi');

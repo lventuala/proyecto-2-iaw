@@ -244,10 +244,6 @@ class ProductoController extends Controller
             'page' => $page
         ];
 
-        /*$datos = [
-            "RESULT" => "OK"
-        ];*/
-
         // devuelvo resultados
         return response()->json($datos);
     }

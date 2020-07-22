@@ -104,6 +104,10 @@ class UsuarioController extends Controller
     /**
      * METODOS PARA LA API
      */
+
+     /**
+      * Recupera un usuario con sus funciones
+      */
     public function getUsuarioApi() {
         $user = Request()->user();
         $res = User::getUsuarioRoles($user->id);
@@ -154,5 +158,32 @@ class UsuarioController extends Controller
             'usuario' => $usuario_final,
             'error' => false,
         ));
+    }
+
+    /**
+     * Recupera el listado de usuarios
+     */
+    public function indexApi()
+    {
+        $usuarios = User::getUsuarios(Auth::user()->id);
+        return response()->json(array("usuarios" => $usuarios));
+    }
+
+    /**
+     * Activa el usuario pasado como parametro (cambia estado a 0)
+     */
+    public function activarApi($id) {
+        User::updateEstado($id,0);
+        $usuario = User::getUsuario($id);
+        return response()->json(array("usuario" => $usuario));
+    }
+
+    /**
+     * Desactiva el usuario pasado como parametro (cambia estado a 1)
+     */
+    public function desactivarApi($id) {
+        User::updateEstado($id,1);
+        $usuario = User::getUsuario($id);
+        return response()->json(array("usuario" => $usuario));
     }
 }
