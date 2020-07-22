@@ -25,12 +25,19 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // listar y ABM productos
     Route::get('/producto/index', 'ProductoController@indexApi');
+    Route::get('/producto/productosPedidos', 'ProductoController@productosPedidosApi');
+
 
     // usuario logueadoy lista de usuarios
     Route::get('/user','UsuarioController@getUsuarioApi');
     Route::get('/usuario/index', 'UsuarioController@indexApi');
     Route::put('/usuario/activar/{id}', 'UsuarioController@activarApi');
     Route::put('/usuario/desactivar/{id}', 'UsuarioController@desactivarApi');
+
+    // listado de pedidos
+    Route::get('pedido/index', 'PedidoController@indexApi');
+    Route::post('pedido/store', 'PedidoController@storeApi');
+
 });
 
 Route::post('/login','Auth\LoginController@loginApi');

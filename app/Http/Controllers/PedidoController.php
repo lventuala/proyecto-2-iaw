@@ -102,4 +102,58 @@ class PedidoController extends Controller
     {
         //
     }
+
+    /*****************************************************************
+     * METODOS PARA LA API
+     **********************************/
+
+    /**
+     * Recuperar listado de pedidos
+    */
+    public function indexApi()
+    {
+        $pedidos = Pedido::getPedidos();
+        return response()->json(array(
+            'pedidos' => $pedidos,
+            'error' => false,
+        ));
+    }
+
+    /**
+     * Guarda Un nuevo perido
+     */
+    public function storeApi(Request $request)
+    {
+        $productos = Request()->productos;
+        //return response()->json($productos);
+
+        $arr_pedidos = [];
+        foreach ($productos as $p) {
+            if ( !empty( (int)$p['cantidad'] ) ) {
+                $arr_pedidos[] = (object) array("id" => (int)$p['id'], "cantidad" => (int) $p['cantidad']);
+            }
+        }
+/*
+        if (empty($arr_pedidos)) {
+            return response()->json(array("error" => true, "msn" => "Debe agregar al menos un producto"));
+        } else {
+            return response()->json($productos);
+        }
+*/
+
+        if (empty($arr_pedidos)) {
+            //return back()->with("error", "Debe agregar al menos un producto");
+            return response()->json(array("error" => true, "msn" => "Debe agregar al menos un producto"));
+        } else {
+            // todo ok genero pedido
+            $msn_error = Pedido::guardarPedido($arr_pedidos);
+
+            if (empty($msn_error)) {
+                return response()->json(array("error" => false, "msn" => "El pedido se realizo correctamente"));
+            } else {
+                return response()->json(array("error" => true, "msn" => $msn_error));
+            }
+        }
+    }
+
 }

@@ -101,9 +101,9 @@ class UsuarioController extends Controller
         //
     }
 
-    /**
+    /*****************************************************************
      * METODOS PARA LA API
-     */
+     **********************************/
 
      /**
       * Recupera un usuario con sus funciones
@@ -132,7 +132,7 @@ class UsuarioController extends Controller
 
         // seteo funciones de acuerdo al rol que tenga el usuario
         $funciones = array();
-        $funciones [] = array('nombre' => 'Home', 'url' => '/home');
+
         $url_default = "";
 
         if ($roles['admin']) {
@@ -149,6 +149,8 @@ class UsuarioController extends Controller
             $funciones [] = array('nombre' => 'Pedidos Generados', 'url' => '/pedidos-generados');
             $url_default = "/generar-pedido";
         }
+
+        $funciones [] = array('nombre' => 'Datos Personales', 'url' => '/datos-personales');
 
         $usuario_final['roles'] = $roles;
         $usuario_final['funciones'] = $funciones;
