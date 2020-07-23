@@ -135,19 +135,23 @@ class UsuarioController extends Controller
 
         $url_default = "";
 
-        if ($roles['admin']) {
-            $funciones [] = array('nombre' => 'Usuarios', 'url' => '/usuarios');
-            $funciones [] = array('nombre' => 'Productos', 'url' => '/productos');
-            $funciones [] = array('nombre' => 'Materias Primas', 'url' => '/materias-primas');
-            $url_default = "/productos";
-        } else if ($roles['base']) {
-            $funciones [] = array('nombre' => 'Productos', 'url' => '/productos');
-            $funciones [] = array('nombre' => 'Materias Primas', 'url' => '/materias-primas');
-            $url_default = "/productos";
-        } else if ($roles['usuario']) {
-            $funciones [] = array('nombre' => 'Generar Pedido', 'url' => '/generar-pedido');
-            $funciones [] = array('nombre' => 'Pedidos Generados', 'url' => '/pedidos-generados');
-            $url_default = "/generar-pedido";
+        if ($usuario_final['estado'] == 0) {
+            if ($roles['admin']) {
+                $funciones [] = array('nombre' => 'Usuarios', 'url' => '/usuarios');
+                $funciones [] = array('nombre' => 'Productos', 'url' => '/productos');
+                $funciones [] = array('nombre' => 'Materias Primas', 'url' => '/materias-primas');
+                $url_default = "/productos";
+            } else if ($roles['base']) {
+                $funciones [] = array('nombre' => 'Productos', 'url' => '/productos');
+                $funciones [] = array('nombre' => 'Materias Primas', 'url' => '/materias-primas');
+                $url_default = "/productos";
+            } else if ($roles['usuario']) {
+                $funciones [] = array('nombre' => 'Generar Pedido', 'url' => '/generar-pedido');
+                $funciones [] = array('nombre' => 'Pedidos Generados', 'url' => '/pedidos-generados');
+                $url_default = "/generar-pedido";
+            }
+        } else {
+            $url_default = "/datos-personales";
         }
 
         $funciones [] = array('nombre' => 'Datos Personales', 'url' => '/datos-personales');
