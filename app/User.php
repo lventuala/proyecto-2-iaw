@@ -5,9 +5,13 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
+    protected $table = 'usuario';
+
     use Notifiable;
 
     /**
@@ -16,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nombre', 'email', 'password',
     ];
 
     /**
@@ -36,4 +40,57 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getUsuario($id) {
+        return User::where('id','=',$id)->get()->first();
+    }
+
+    public static function getUsuarios($not_id = 0) {
+        return User::where('id','!=',$not_id)->get();
+    }
+
+    public static function getUsuarioRoles($id) {
+        return User::
+        join('rol_usuario','rol_usuario.usuario_id','=','usuario.id')
+        ->join('rol','rol.id','=','rol_usuario.rol_id')
+        ->select('usuario.nombre', 'usuario.email','usuario.estado', 'rol.nombre as rol')
+        ->where('usuario.id', '=', $id)
+        ->get();
+    }
+
+    public static function get($id) {
+        return User::where('id',$id)->get()->first();
+    }
+
+    public static function updateEstado($id,$estado) {
+        $usuario = User::get($id);
+        $usuario->estado = $estado;
+        $usuario->save();
+    }
+
+
+    public function roles() {
+        return $this
+            ->belongsToMany('App\Rol', 'rol_usuario', 'usuario_id', 'rol_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Actualizo token para uso por API
+     */
+    public function updateToken() {
+        $new_token = Str::random(80);
+        $this->api_token = $new_token;
+        $this->save();
+        return $new_token;
+    }
+
+    public function hasRol($rol) {
+        if ($this->roles()->where('nombre', $rol)->first()) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
