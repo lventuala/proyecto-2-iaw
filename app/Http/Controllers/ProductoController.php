@@ -264,9 +264,9 @@ class ProductoController extends Controller
                 $mprima = MateriaPrima::get($mp->materia_prima_id);
                 $max_aux = $mprima->cantidad / $mp->cantidad;
                 if ( $max === 0 ) {
-                    $max = $max_aux;
+                    $max = round($max_aux,2);
                 } else {
-                    $max = min($max,$max_aux);
+                    $max = round(min($max,$max_aux),2);
                 }
             }
 
@@ -280,4 +280,39 @@ class ProductoController extends Controller
 
         return response()->json($datos);
     }
+
+    public function updateApi(Request $request, $id)
+    {
+
+        $result = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'mps.*.materia_prima_id' => 'required|numeric',
+            'mps.*.cantidad' => 'required|numeric|min:0.1'
+        ]);
+
+        /*
+        $file = null;
+        $fileName = null;
+        if (isset($request->imagen)) {
+            $request->validate([
+                'imagen' => 'required|image',
+                'file_name' => 'required'
+            ]);
+
+            $file = $request->file('imagen');
+            $fileName = $request['file_name'];
+        }
+
+        //Producto::updateProducto($id,$result,$file,$fileName);
+        */
+
+        $datos = [
+            'id' => $id,
+            'result' => $result
+        ];
+
+        return response()->json($datos);
+    }
+
 }
